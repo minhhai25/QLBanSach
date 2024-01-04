@@ -1,0 +1,69 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Dondat>
+
+@{
+    ViewData["Title"] = "DanhMucDonDat";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h3>Danh sách các đơn đặt</h3>
+
+<p>
+    <a asp-action="ThemDonDatMoi">Thêm đơn đặt mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Mã đơn đặt
+            </th>
+            <th>
+                Mã tài khoản
+            </th>
+            <th>
+                Thời gian
+            </th>
+
+            <th>
+                Trạng thái
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i % 2 == 0)
+            {
+                cls = "table-info";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Madd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matk)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thoigian)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trangthai)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("DanhMucDonDat", new { page = page }), new X.PagedList.Web.Common.PagedListRenderOptions()
+{
+    LiElementClasses = new List<String> { "page-item" },
+    PageClasses = new List<String> { "page-link" }
+})

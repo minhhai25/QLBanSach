@@ -1,0 +1,90 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Sanpham>
+
+@{
+    ViewData["Title"] = "DanhMucSanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h3>Danh sách các sản phẩm</h3>
+
+
+    <div class="form-group">
+    <a asp-action="ThemSanPhamMoi">Thêm sản phẩm</a>
+    </div>
+
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Mã sản phẩm
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Mã nhà xuất bản
+            </th>
+
+            <th>
+                Mã Loại
+            </th>
+            <th>
+                Mã tác giả
+            </th>
+            <th>
+                Giá sản phẩm
+            </th>
+            <th>
+                Mô tả
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i % 2 == 0)
+            {
+                cls = "table-info";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Masp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tensp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manxb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Maloai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mota)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("DanhMucSanPham", new { page = page }), new X.PagedList.Web.Common.PagedListRenderOptions()
+{
+    LiElementClasses = new List<String> { "page-item" },
+    PageClasses = new List<String> { "page-link" }
+})
